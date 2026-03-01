@@ -11,6 +11,7 @@
       --dark: #020817;
       --light: #f9fafb;
       --muted: #94a3b8;
+      --woven: #0f5b3a; /* verde woven estilo iPhone 17 Pro Max */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,16 +19,20 @@
 
     body {
       font-family: system-ui, -apple-system, "Segoe UI";
-      background: radial-gradient(circle at top, #022c22 0, var(--dark) 45%, #000);
+      background:
+        radial-gradient(circle at top, var(--woven) 0, var(--dark) 45%, #000 100%);
       color: var(--light);
       overflow-x: hidden;
       position: relative;
+      padding: 40px 20px;
+      text-align: center;
     }
 
-    /* Fundo neon */
+    /* Fundo neon animado */
     body::before {
       content: "";
-      position: fixed; inset: -40%;
+      position: fixed;
+      inset: -40%;
       background:
         radial-gradient(circle at 10% 0, rgba(57,255,20,.18), transparent 55%),
         radial-gradient(circle at 100% 100%, rgba(34,197,94,.4), transparent 55%);
@@ -40,10 +45,11 @@
       100% { transform: scale(1.15); opacity: 1; }
     }
 
-    /* Linhas verde neon */
+    /* Linhas neon descendo */
     body::after {
       content: "";
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: repeating-linear-gradient(
         to bottom,
         rgba(57,255,20,.05) 0px,
@@ -51,8 +57,8 @@
         transparent 3px
       );
       animation: scan 10s linear infinite;
-      z-index: -1;
       opacity: .6;
+      z-index: -1;
     }
 
     @keyframes scan {
@@ -60,7 +66,7 @@
       100% { transform: translateY(40px); }
     }
 
-    /* Loading */
+    /* LOADER */
     .loader-screen {
       position: fixed;
       inset: 0;
@@ -76,31 +82,28 @@
     .loader-ring {
       width: 70px; height: 70px;
       border-radius: 999px;
-      border: 3px solid rgba(148,163,184,.25);
+      border: 3px solid rgba(148,163,184,.3);
       border-top-color: var(--neon);
       animation: spin .9s linear infinite;
     }
-
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .loader-text {
       color: var(--muted);
       font-size: .75rem;
-      letter-spacing: .18em;
       text-transform: uppercase;
+      letter-spacing: .18em;
     }
 
-    /* Página */
+    /* CONTEÚDO PRINCIPAL */
     .page-wrap {
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.6s ease-out;
-      padding: 40px 20px;
-      min-height: 100vh;
-      text-align: center;
+      transition: opacity .6s ease-out;
+      max-width: 720px;
+      margin: 0 auto;
     }
 
-    /* Título neon */
     .glitch {
       font-size: 2rem;
       font-weight: 800;
@@ -116,28 +119,71 @@
     .subtitle {
       font-size: .9rem;
       color: var(--muted);
-      margin: 10px 0 20px;
+      margin: 10px 0 24px;
     }
 
-    #countdown-main {
-      font-size: 3rem;
+    /* BLOCO: Quantos dias faltam + temporizador */
+    .count-section {
+      margin-bottom: 28px;
+    }
+
+    .count-title {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .count-main-days {
+      font-size: 2.4rem;
       font-weight: 900;
       text-shadow: 0 0 18px rgba(57,255,20,.9);
+      margin-bottom: 4px;
     }
 
-    #countdown-label {
+    .count-main-label {
       font-size: .85rem;
       text-transform: uppercase;
+      letter-spacing: .16em;
       color: var(--muted);
-      letter-spacing: .15em;
-      margin-bottom: 30px;
+      margin-bottom: 14px;
     }
 
-    /* Botões */
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      justify-items: center;
+    }
+
+    .timer-box {
+      background: rgba(3,7,18,.8);
+      border-radius: 12px;
+      border: 1px solid rgba(57,255,20,.45);
+      padding: 8px 6px;
+      min-width: 70px;
+    }
+
+    .timer-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(57,255,20,.7);
+    }
+
+    .timer-label {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+    }
+
+    /* MENU */
     .menu {
+      margin-top: 28px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       align-items: center;
     }
 
@@ -147,61 +193,91 @@
       padding: 12px 20px;
       border-radius: 999px;
       background: rgba(3,7,18,.8);
+      border: 1px solid rgba(57,255,20,.5);
       color: var(--light);
       text-decoration: none;
-      border: 1px solid rgba(57,255,20,.5);
       text-transform: uppercase;
-      font-size: .9rem;
       letter-spacing: .12em;
+      font-size: .85rem;
       transition: .2s;
     }
 
     .btn-neon:hover {
-      background: rgba(57,255,20,.2);
+      background: rgba(57,255,20,.25);
       box-shadow: 0 0 16px var(--neon);
       transform: translateY(-2px);
     }
 
     footer {
-      margin-top: 45px;
-      padding-top: 14px;
+      margin-top: 40px;
       color: var(--muted);
       font-size: .75rem;
       letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 480px) {
+      .timer-box { min-width: 60px; padding: 6px 4px; }
+      .timer-value { font-size: 1rem; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Loading -->
+  <!-- LOADING -->
   <div id="loader" class="loader-screen">
     <div class="loader-ring"></div>
     <div class="loader-text">PREPARANDO A EXPERIÊNCIA FUTURISTA...</div>
   </div>
 
-  <!-- Página principal -->
+  <!-- CONTEÚDO -->
   <main id="page" class="page-wrap">
-
     <h1 class="glitch">Contagem Regressiva<br>para os 15 anos do Davi</h1>
-    <p class="subtitle">O grande dia está chegando...</p>
+    <p class="subtitle">O grande dia está chegando... vamos ver exatamente quanto tempo falta ⏱️</p>
 
-    <div id="countdown-main">--</div>
-    <div id="countdown-label">dias restantes</div>
+    <!-- BLOCO: QUANTOS DIAS FALTAM + TEMPORIZADOR COMPLETO -->
+    <section class="count-section">
+      <div class="count-title">QUANTO TEMPO FALTA?</div>
 
+      <div class="count-main-days" id="count-main-days">--</div>
+      <div class="count-main-label" id="count-main-label">dias restantes</div>
+
+      <div class="timer-grid" aria-label="Temporizador com dias, horas, minutos e segundos">
+        <div class="timer-box">
+          <div class="timer-value" id="t-dias">--</div>
+          <div class="timer-label">Dias</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-value" id="t-horas">--</div>
+          <div class="timer-label">Horas</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-value" id="t-minutos">--</div>
+          <div class="timer-label">Min</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-value" id="t-segundos">--</div>
+          <div class="timer-label">Seg</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU PRINCIPAL -->
     <div class="menu">
       <a class="btn-neon" href="sobre.html">Sobre Mim</a>
       <a class="btn-neon" href="importancia.html">Importância</a>
-      <a class="btn-neon" href="convite.html">Convite</a>
-      <a class="btn-neon" href="presentes.html">Presentes</a>
+      <a class="btn-neon" href="convite.html">Convite Oficial</a>
+      <a class="btn-neon" href="presentes.html">Lista de Presentes</a>
       <a class="btn-neon" href="festa.html">Detalhes da Festa</a>
-      <a class="btn-neon" href="contato.html">Contato</a>
+      <a class="btn-neon" href="contato.html">Redes & Contato</a>
       <a class="btn-neon" href="download.html">Downloads</a>
     </div>
 
-    <footer>site oficial • davi 15 anos • versão gamer neon</footer>
+    <footer>site oficial • davi 15 anos • versão gamer neon + woven</footer>
   </main>
 
+  <!-- SCRIPT: LOADER + CONTAGEM -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const loader = document.getElementById("loader");
@@ -214,26 +290,64 @@
       }, 550);
     });
 
-    function atualizar() {
+    function atualizarTempo() {
       const alvo = new Date("2026-04-01T00:00:00").getTime();
       const agora = Date.now();
-      const diff = alvo - agora;
+      let diff = alvo - agora;
+
+      const mainDias = document.getElementById("count-main-days");
+      const mainLabel = document.getElementById("count-main-label");
+      const dEl = document.getElementById("t-dias");
+      const hEl = document.getElementById("t-horas");
+      const mEl = document.getElementById("t-minutos");
+      const sEl = document.getElementById("t-segundos");
 
       if (diff <= 0) {
-        document.getElementById("countdown-main").textContent = "🎂";
-        document.getElementById("countdown-label").textContent = "É HOJE!";
+        mainDias.textContent = "🎂";
+        mainLabel.textContent = "É HOJE!";
+        dEl.textContent = "00";
+        hEl.textContent = "00";
+        mEl.textContent = "00";
+        sEl.textContent = "00";
         return;
       }
 
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      document.getElementById("countdown-main").textContent = d;
-      document.getElementById("countdown-label").textContent =
-        d === 1 ? "dia restante" : "dias restantes";
+      const segundos = Math.floor(diff / 1000);
+      const dias = Math.floor(segundos / (60 * 60 * 24));
+      const horas = Math.floor((segundos % (60 * 60 * 24)) / (60 * 60));
+      const minutos = Math.floor((segundos % (60 * 60)) / 60);
+      const seg = segundos % 60;
+
+      mainDias.textContent = dias;
+      mainLabel.textContent = dias === 1 ? "dia restante" : "dias restantes";
+
+      dEl.textContent = String(dias).padStart(2, "0");
+      hEl.textContent = String(horas).padStart(2, "0");
+      mEl.textContent = String(minutos).padStart(2, "0");
+      sEl.textContent = String(seg).padStart(2, "0");
     }
 
-    atualizar();
-    setInterval(atualizar, 60000);
+    atualizarTempo();
+    setInterval(atualizarTempo, 1000);
   </script>
 
+  <!-- SCRIPT SOM GLOBAL (usa som.mp3 na raiz) -->
+  <script>
+    const audio = new Audio("som.mp3");
+    audio.loop = true;
+    audio.volume = 0.45;
+
+    let somLigado = localStorage.getItem("somEstado") === "on";
+
+    document.addEventListener("click", () => {
+      if (somLigado) {
+        audio.play().catch(() => {});
+      }
+    });
+
+    if (somLigado) {
+      audio.play().catch(() => {});
+    }
+  </script>
 </body>
 </html>
