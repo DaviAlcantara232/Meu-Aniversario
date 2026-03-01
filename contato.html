@@ -1,47 +1,464 @@
 <!DOCTYPE html>
-<html lang='pt-BR'>
+<html lang="pt-BR">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width,initial-scale=1.0'>
-<title>Contato - Davi</title>
-<style>
- body{background:#020817;color:#fff;font-family:Arial,system-ui;padding:20px;line-height:1.7;}
- a{color:#39ff14;font-weight:bold;text-decoration:none;display:block;margin-bottom:10px;}
- h1{color:#39ff14;}
- .item{margin-top:14px;}
- .label{color:#9ca3af;font-size:0.9rem;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre Mim - Davi</title>
+  <style>
+    :root {
+      --neon-green: #39ff14;
+      --bg-dark: #020817;
+      --bg-darker: #00010a;
+      --text-light: #f9fafb;
+      --text-muted: #a1a1aa;
+      --accent: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #022c22 0, var(--bg-dark) 45%, #000 100%);
+      color: var(--text-light);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fundo full-screen com animação futurista */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(57, 255, 20, 0.16) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(34, 197, 94, 0.35) 0, transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+      animation: bgPulse 7s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(57, 255, 20, 0.06) 0px,
+        rgba(57, 255, 20, 0.06) 1px,
+        transparent 2px
+      );
+      opacity: 0.5;
+      animation: scan 14s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes bgPulse {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.15); opacity: 1; }
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(25px); }
+    }
+
+    /* Tela de loading animada */
+    .loader-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #022c22 0, #020617 40%, #000 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 50;
+    }
+
+    .loader-ring {
+      width: 70px;
+      height: 70px;
+      border-radius: 999px;
+      border: 3px solid rgba(148, 163, 184, 0.4);
+      border-top-color: var(--neon-green);
+      animation: spin 1s linear infinite;
+      box-shadow: 0 0 16px rgba(57, 255, 20, 0.7);
+    }
+
+    .loader-text {
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .page-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px 18px;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeInPage 0.9s ease-out forwards;
+      animation-delay: 0.2s;
+    }
+
+    @keyframes fadeInPage {
+      0% { opacity: 0; transform: translateY(18px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      width: 100%;
+      max-width: 540px;
+      background: rgba(3, 7, 18, 0.92);
+      border-radius: 24px;
+      padding: 26px 22px 20px;
+      border: 1px solid rgba(57, 255, 20, 0.45);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      background:
+        linear-gradient(120deg, rgba(57, 255, 20, 0.12), transparent 55%),
+        radial-gradient(circle at bottom, rgba(15, 118, 110, 0.35), transparent 60%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(57, 255, 20, 0.7);
+      background: rgba(15, 23, 42, 0.75);
+      color: var(--neon-green);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--neon-green);
+      box-shadow: 0 0 12px var(--neon-green);
+    }
+
+    .glitch-title {
+      margin-top: 16px;
+      font-size: 1.8rem;
+      line-height: 1.2;
+      position: relative;
+      text-shadow:
+        0 0 8px rgba(57, 255, 20, 0.9),
+        0 0 18px rgba(57, 255, 20, 0.9);
+      animation: glowTitle 2.4s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    .glitch-title span {
+      position: relative;
+    }
+
+    .glitch-title span::before,
+    .glitch-title span::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .glitch-title span::before {
+      transform: translateX(-1px);
+      color: #22d3ee;
+    }
+
+    .glitch-title span::after {
+      transform: translateX(1px);
+      color: #a855f7;
+    }
+
+    @keyframes glowTitle {
+      0% { text-shadow: 0 0 6px rgba(57, 255, 20, 0.6); }
+      100% { text-shadow: 0 0 22px rgba(57, 255, 20, 1); }
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .list {
+      margin-top: 18px;
+      text-align: left;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+      position: relative;
+      z-index: 1;
+    }
+
+    .list li {
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .list li::before {
+      content: "▹";
+      color: var(--neon-green);
+      margin-top: 1px;
+    }
+
+    .controls {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-neon {
+      position: relative;
+      border: 1px solid rgba(57, 255, 20, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-light);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn-neon::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(57, 255, 20, 0.1), transparent 40%, rgba(56, 189, 248, 0.18));
+      opacity: 0;
+      transform: translateX(-40%);
+      transition: opacity 0.2s ease, transform 0.25s ease;
+    }
+
+    .btn-neon:hover::before {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .btn-neon:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 0 16px rgba(57, 255, 20, 0.9);
+      background: rgba(15, 118, 110, 0.9);
+    }
+
+    .footer {
+      margin-top: 22px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.35);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer span:nth-child(1) {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .footer span:nth-child(2) {
+      color: rgba(57, 255, 20, 0.9);
+    }
+
+    /* Tema claro neon */
+    body.theme-light {
+      background: radial-gradient(circle at top, #ecfdf3 0, #e5f9ff 40%, #d9f99d 100%);
+      color: #020617;
+    }
+
+    body.theme-light .card {
+      background: rgba(248, 250, 252, 0.96);
+      border-color: rgba(22, 163, 74, 0.7);
+      box-shadow: 0 18px 40px rgba(22, 101, 52, 0.4);
+    }
+
+    body.theme-light .subtitle {
+      color: #4b5563;
+    }
+
+    body.theme-light .list li::before {
+      color: #16a34a;
+    }
+
+    body.theme-light .btn-neon {
+      background: #0f172a;
+      color: #f9fafb;
+    }
+
+    body.theme-light .footer {
+      border-top-color: rgba(148, 163, 184, 0.6);
+      color: #4b5563;
+    }
+
+    .nav-back {
+      margin-top: 18px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-back a {
+      color: var(--neon-green);
+      font-size: 0.85rem;
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav-back a:hover {
+      text-decoration: underline;
+    }
+
+    @media (min-width: 768px) {
+      .card {
+        padding: 30px 26px 22px;
+      }
+
+      .glitch-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-<h1>📱 Redes & Contato</h1>
-<p>Aqui ficam os meios de contato e futuras redes ligadas aos meus projetos.</p>
+  <!-- Tela de loading -->
+  <div class="loader-screen" id="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-text">carregando perfil do davi...</div>
+  </div>
 
-<div class='item'>
-  <div class='label'>E-mail: Davi Castro de Alcantara</div>
-  <p><strong>davi.castro.alcantara@gmail.com</strong></p>
-</div>
+  <main class="page-wrap" id="page">
+    <section class="card" aria-label="Sobre Davi">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>perfil premium gamer</span>
+      </div>
 
-<div class='item'>
-  <div class='label'>Instagram: Davi Castro</div>
-  <p><strong>@dav.ialcantara</strong></p>
-</div>
+      <h1 class="glitch-title">
+        <span data-text="Davi Castro de Alcântara">Davi Castro de Alcântara</span>
+      </h1>
 
-<div class='item'>
-  <div class='label'>TikTok: Davi Alcantara</div>
-  <p><strong>@davi.alcantara55</strong></p>
-</div>
+      <p class="subtitle">14 anos • futuro dev • mente criativa ligada em tecnologia, vídeos e mundo digital.</p>
 
+      <ul class="list">
+        <li>Curioso por natureza, sempre querendo entender como tudo funciona.</li>
+        <li>Gosta de programação, design, apps e criar coisas novas do zero.</li>
+        <li>Está construindo sua própria identidade, sem medo de sonhar grande.</li>
+        <li>Vê a tecnologia como ferramenta para mudar a própria vida e a dos outros.</li>
+      </ul>
 
-<h2>📌 Navegação</h2>
-<a href='index.html'>⬅ Voltar à Página Inicial</a>
-<a href='sobre.html'>Sobre Mim</a>
-<a href='importancia.html'>Importância do Aniversário</a>
-<a href='convite.html'>Convite Oficial</a>
-<a href='mensagens.html'>Mensagens Especiais</a>
-<a href='presentes.html'>Lista de Presentes</a>
-<a href='festa.html'>Detalhes da Festa</a>
-<a href='download.html'>Downloads</a>
+      <div class="controls">
+        <button class="btn-neon" type="button" id="toggle-theme">Tema: Dark Neon</button>
+        <button class="btn-neon" type="button" id="toggle-sound">Som: Desligado</button>
+      </div>
 
+      <footer class="footer">
+        <span>sobre mim</span>
+        <span>vibe futurista • edição 15 anos</span>
+      </footer>
+    </section>
+
+    <div class="nav-back">
+      <a href="index.html">⬅ Voltar para a página inicial</a>
+    </div>
+  </main>
+
+  <!-- Áudio de tema (o arquivo real pode ser adicionado depois no GitHub) -->
+  <audio id="theme-audio" loop>
+    <!-- Quando tiver o arquivo, coloque algo como: <source src="tema_neon.mp3" type="audio/mpeg" /> -->
+  </audio>
+
+  <script>
+    const loader = document.getElementById("loader");
+    const page = document.getElementById("page");
+    const toggleThemeBtn = document.getElementById("toggle-theme");
+    const toggleSoundBtn = document.getElementById("toggle-sound");
+    const audioEl = document.getElementById("theme-audio");
+
+    // Simula pequeno loading antes de mostrar a página
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        if (loader) loader.style.display = "none";
+        if (page) page.style.opacity = "1";
+      }, 700);
+    });
+
+    // Alternar tema claro/escuro neon
+    toggleThemeBtn?.addEventListener("click", () => {
+      document.body.classList.toggle("theme-light");
+      const isLight = document.body.classList.contains("theme-light");
+      toggleThemeBtn.textContent = isLight ? "Tema: Light Neon" : "Tema: Dark Neon";
+    });
+
+    // Controle simples de som (quando você adicionar um arquivo de áudio)
+    let soundOn = false;
+    toggleSoundBtn?.addEventListener("click", () => {
+      if (!audioEl) return;
+
+      // Aqui o navegador só vai tocar se o usuário clicar (o que é permitido)
+      if (!soundOn) {
+        audioEl.play().catch(() => {});
+        soundOn = true;
+        toggleSoundBtn.textContent = "Som: Ligado";
+      } else {
+        audioEl.pause();
+        soundOn = false;
+        toggleSoundBtn.textContent = "Som: Desligado";
+      }
+    });
+  </script>
 </body>
 </html>
-
