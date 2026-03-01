@@ -1,1 +1,41 @@
-Meu site do Davi
+<!-- Página principal: Contagem Regressiva do Davi -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contagem Regressiva - 15 anos do Davi</title>
+  <style>
+    body { background:#020817; color:#fff; font-family:Arial; padding:20px; text-align:center; }
+    a { color:#39ff14; font-weight:bold; display:block; margin:10px 0; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <h1>🎉 Contagem Regressiva para os 15 anos do Davi</h1>
+  <p id="contador">Carregando...</p>
+
+  <h2>📌 Navegação</h2>
+  <a href="sobre.html">Sobre Mim</a>
+  <a href="importancia.html">Importância do Aniversário</a>
+  <a href="convite.html">Convite Oficial</a>
+  <a href='presentes.html'>Lista de Presentes</a>
+  <a href='festa.html'>Detalhes da Festa</a>
+  <a href='contato.html'>Redes & Contato</a>
+  <a href='download.html'>Downloads</a>
+
+<script>
+  function atualizar() {
+    const alvo = new Date("2026-04-01T00:00:00").getTime();
+    const agora = Date.now();
+    const diff = alvo - agora;
+
+    if(diff <= 0){ document.getElementById('contador').textContent = "🎂 É HOJE!"; return; }
+
+    const d = Math.floor(diff / (1000*60*60*24));
+    document.getElementById('contador').textContent = d + " dias restantes";
+  }
+  atualizar();
+  setInterval(atualizar, 60000);
+</script>
+</body>
+</html>
