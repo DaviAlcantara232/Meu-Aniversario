@@ -1,29 +1,207 @@
 <!DOCTYPE html>
-<html lang='pt-BR'>
+<html lang="pt-BR">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width,initial-scale=1.0'>
-<title>Convite - 15 anos do Davi</title>
-<style>
- body{background:#020817;color:#fff;font-family:Arial;padding:20px;text-align:center;}
- a{color:#39ff14;font-weight:bold;text-decoration:none;display:block;margin-top:20px;}
- h1{color:#39ff14;margin-bottom:10px;}
- .box{border:1px solid #39ff14;padding:20px;border-radius:12px;max-width:400px;margin:auto;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convite Oficial • Davi 15 anos</title>
+
+  <style>
+    :root {
+      --neon: #39ff14;
+      --dark: #020817;
+      --light: #f9fafb;
+      --muted: #94a3b8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI';
+      background: radial-gradient(circle at top, #022c22 0, var(--dark) 45%, #000 100%);
+      color: var(--light);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(57,255,20,.18) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(34,197,94,.4) 0, transparent 55%);
+      animation: pulse 7s infinite alternate ease-in-out;
+      z-index: -2;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: .5; }
+      100% { transform: scale(1.15); opacity: 1; }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(57,255,20,.05) 0px,
+        rgba(57,255,20,.05) 1px,
+        transparent 3px
+      );
+      animation: scan 10s linear infinite;
+      z-index: -1;
+      opacity: .6;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(40px); }
+    }
+
+    .loader-screen {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 999;
+    }
+
+    .loader-ring {
+      width: 70px;
+      height: 70px;
+      border-radius: 999px;
+      border: 3px solid rgba(148,163,184,.3);
+      border-top-color: var(--neon);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-text {
+      color: var(--muted);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: .75rem;
+    }
+
+    .page-wrap {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: .4s;
+      padding: 40px 20px;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .glitch {
+      font-size: 1.9rem;
+      font-weight: 700;
+      text-shadow: 0 0 12px var(--neon);
+      position: relative;
+      animation: glow 2.2s infinite alternate ease-in-out;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 12px var(--neon); }
+      100% { text-shadow: 0 0 28px var(--neon); }
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: .9rem;
+      margin: 10px 0 20px;
+    }
+
+    .card {
+      background: rgba(3,7,18,.85);
+      border: 1px solid rgba(57,255,20,.4);
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 500px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0,0,0,.7);
+    }
+
+    .btn-neon {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      color: var(--light);
+      background: rgba(3,7,18,.8);
+      border: 1px solid rgba(57,255,20,.5);
+      cursor: pointer;
+      letter-spacing: .1em;
+      transition: .2s;
+      text-decoration: none;
+      font-size: .9rem;
+      text-transform: uppercase;
+    }
+
+    .btn-neon:hover {
+      background: rgba(57,255,20,.2);
+      box-shadow: 0 0 16px var(--neon);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(148,163,184,.4);
+      color: var(--muted);
+      font-size: .75rem;
+      letter-spacing: .12em;
+    }
+  </style>
 </head>
+
 <body>
-<h1>🎉 Convite Oficial 🎉</h1>
-<div class='box'>
-  <p>Você está convidado para celebrar os</p>
-  <h2>15 anos do Davi Castro de Alcântara</h2>
-  <p>📅 <strong>01 de abril de 2026</strong></p>
-  <p>📍 <strong>Casa do Davi</strong></p>
-  <p>⏰ <strong>O dia inteiro é dele!</strong></p>
-</div>
+  <div class="loader-screen" id="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-text">carregando convite...</div>
+  </div>
 
-<a href='index.html'>⬅ Voltar à Página Inicial</a>
-<a href='sobre.html'>Sobre Mim</a>
-<a href='importancia.html'>Importância do Aniversário</a>
+  <main id="page" class="page-wrap">
+    <h1 class="glitch">Convite Oficial • Davi</h1>
+    <p class="subtitle">Baixe e compartilhe seu convite futurista.</p>
 
+    <div class="card">
+      <p style="margin-bottom: 10px;">
+        Seu convite está disponível em PDF com tema neon gamer.
+      </p>
+      <a href="convite_futuristico_davi_bg.pdf" download class="btn-neon">
+        📄 Baixar Convite
+      </a>
+    </div>
+
+    <a href="index.html" class="btn-neon">⬅ Voltar</a>
+
+    <footer>convite oficial • davi 15 anos • futurista neon</footer>
+  </main>
+
+  <script>
+    const loader = document.getElementById('loader');
+    const page = document.getElementById('page');
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.style.display = 'none';
+        page.style.opacity = 1;
+      }, 600);
+    });
+  </script>
 </body>
 </html>
